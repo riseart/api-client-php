@@ -1,7 +1,7 @@
 {
     "name": "riseart/api-client-php",
     "description": "Rise Art API client for PHP",
-    "version": "1.0",
+    "version": "0.1",
     "type": "library",
     "require": {
         "guzzlehttp/guzzle": "^6.3"
