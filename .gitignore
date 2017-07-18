@@ -1,4 +1,57 @@
-vendor/
+##
+# GIT Ignore Rules
+#
+# @author massa
+# @copyright Copyright (c) Rise Art Ltd 2016
+##
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific ignores #
+########################
 .idea
+.metadata
+.project
+.buildpath
+.settings
+
+# Project specific ignores #
+############################
+vendor/
 composer.lock
 .credentials
