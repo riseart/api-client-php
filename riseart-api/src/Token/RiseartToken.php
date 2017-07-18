@@ -43,6 +43,7 @@ namespace Riseart\Api\Token {
         }
 
         /**
+         * @param null $token
          * @return string
          * @throws RiseartException
          */
@@ -65,12 +66,24 @@ namespace Riseart\Api\Token {
                 throw RiseartException::invalidJWTTokenPayload($payload);
             }
 
-            if ($payloadObject->exp - time() < 0) {
+            if($this->isExpired($payloadObject->exp)){
                 throw RiseartException::JWTTokenWasExpired();
             }
 
             $this->payload = $payloadObject;
             return $token;
+        }
+
+        /**
+         * @param int|null $expiration
+         * @return bool
+         */
+        public function isExpired($expiration = null){
+            $expiration = ($expiration) ? $expiration : $this->getExpiration();
+            if ($expiration - time() < 0) {
+                return true;
+            }
+            return false;
         }
 
         /**
@@ -105,7 +118,6 @@ namespace Riseart\Api\Token {
         {
             return $this->payload;
         }
-
     }
 
 }

@@ -33,10 +33,12 @@ namespace Riseart\Api {
          * @var GuzzleClient
          */
         private $client;
+
         /**
          * @var string
          */
         private $host;
+
         /**
          * @var string
          */
@@ -66,19 +68,79 @@ namespace Riseart\Api {
          * @param array $config
          * @throws RiseartException
          */
-        public function __construct(Array $config)
+        public function __construct(Array $config = null)
         {
-            //  Validate the host
-            (isset($config['host'])) ? $this->host = Validator::validateApiHost($config['host']) : $this->host = self::API_HOST;
+            // Validates the host
+            (isset($config['host'])) ?
+                $this->host = Validator::validateApiHost($config['host']) :
+                $this->host = self::API_HOST;
 
-            // Check if the version is valid
-            (isset($config['defaultVersion'])) ? $this->defaultVersion = Validator::validateVersion($config['defaultVersion']) : $this->defaultVersion = self::STABLE_API_VERSION;
+            // Checks if the version is valid
+            (isset($config['defaultVersion'])) ?
+                $this->defaultVersion = Validator::validateVersion($config['defaultVersion']) :
+                $this->defaultVersion = self::STABLE_API_VERSION;
 
-            // Check if there is an auth adapter then authenticate
-            (isset($config['authAdapter']) && $config['authAdapter'] instanceof InterfaceAdapter) ? $this->setAuthAdapter($config['authAdapter']) : null;
+            // Checks if there is an auth adapter then stores it
+            (isset($config['authAdapter']) && $config['authAdapter'] instanceof InterfaceAdapter) ?
+                $this->setAuthAdapter($config['authAdapter']) :
+                null;
 
-            // Check if there is a valid token then validate it
-            (isset($config['token']) && $config['token'] instanceof RiseartToken) ? $this->setToken($config['token']) : null;
+            // Checks if there is a valid token then validates and stores it
+            (isset($config['token']) && $config['token'] instanceof RiseartToken) ?
+                $this->setToken($config['token']) :
+                null;
+        }
+
+        /**
+         * @param $endpoint
+         * @param null $resourceId
+         * @param array $parameters
+         * @param null $version
+         * @return RiseartResponse
+         * @throws RiseartException
+         */
+        public function GET($endpoint, $resourceId = null, $parameters = [], $version = null)
+        {
+            try {
+                $parameters = Validator::validateRequestParameters($parameters);
+                $url = $this->buildUrl($endpoint, $resourceId, $version);
+                $response = $this->client->request(
+                    self::HTTP_METHOD_GET,
+                    $url,
+                    [
+                        'headers' => $this->getHeaders(),
+                        'query' => $parameters,
+                    ]
+                );
+
+                return new RiseartResponse($response);
+            } catch (GuzzleException $e) {
+                throw RiseartException::manageGuzzleException($e);
+            } catch (RiseartException $e) {
+                throw $e;
+            } catch (\Exception $e) {
+                throw RiseartException::manageGenericException($e);
+            }
+        }
+
+        /**
+         * @param $endpoint
+         * @param array $parameters
+         * @param null $version
+         * @return RiseartResponse
+         */
+        public function POST($endpoint, $parameters, $version = null)
+        {
+            $parameters = Validator::validateRequestParameters($parameters);
+            $url = $this->buildUrl($endpoint, null, $version);
+            return new RiseartResponse($this->client->request(
+                self::HTTP_METHOD_POST,
+                $url,
+                [
+                    'headers' => $this->getHeaders(),
+                    'json' => $parameters,
+                ]
+            ));
         }
 
         /**
@@ -102,58 +164,36 @@ namespace Riseart\Api {
 
         /**
          * @param $endpoint
-         * @param null $resourceId
-         * @param array $parameters
-         * @param null $version
-         * @return RiseartResponse
-         * @throws RiseartException
-         */
-        public function GET($endpoint, $resourceId = null, $parameters = [], $version = null)
-        {
-            try {
-                return new RiseartResponse($this->client->request(
-                    self::HTTP_METHOD_GET,
-                    $this->buildUrl($endpoint, $resourceId, $parameters, $version),
-                    ['headers' => $this->getHeaders()]
-                ));
-            } catch (GuzzleException $e) {
-                throw RiseartException::manageGuzzleException($e);
-            } catch (RiseartException $e) {
-                throw $e;
-            } catch (\Exception $e) {
-                throw RiseartException::manageGenericException($e);
-            }
-        }
-
-        /**
-         * @param $endpoint
          * @param $resourceId
          * @param $parameters
          * @param $version
          * @return string
          */
-        private function buildUrl($endpoint, $resourceId, $parameters = [], $version)
+        private function buildUrl($endpoint, $resourceId = null, $version)
         {
             Validator::validateEndpoint($endpoint);
             Validator::validateResourceId($resourceId);
-            Validator::validateParameters($parameters);
+
             // Compare, validate and select the right version
             $version = '/' . Validator::validateVersion($this->defaultVersion, $version);
+
             // Url encode the resource id
             $resourceId = ($resourceId) ? '/' . urlencode($resourceId) : '';
-            // Convert the param array to an url encoded query string
-            $parameters = (count($parameters) > 0) ? '?' . http_build_query($parameters) : '';
 
-            return $this->host . $version . $endpoint . $resourceId . $parameters;
+            return $this->host . $version . $endpoint . $resourceId;
         }
 
         /**
          * @return array
+         * @throws RiseartException
          */
         private function getHeaders()
         {
+            if ($this->getToken()->isExpired()) {
+                throw RiseartException::JWTTokenWasExpired();
+            }
             $headers = $this->defaultHeaders;
-            ($this->getToken()) ? $headers['Authorization'] = 'Bearer ' . $this->getToken()->validate() : null;
+            ($this->getToken()) ? $headers['Authorization'] = 'Bearer ' . $this->getToken() : null;
             return $headers;
         }
 

@@ -61,8 +61,11 @@ namespace Riseart\Api\Validator {
          */
         public static function validateResourceId($resourceId)
         {
-            // Resource ID can be null but requires to be a string
-            if ($resourceId && !is_string($resourceId)) {
+            // Resource ID can be null or a string
+            if($resourceId === null){
+                return '';
+            }
+            if (!is_string($resourceId)) {
                 throw RiseartException::invalidResourceId();
             }
         }
@@ -76,7 +79,7 @@ namespace Riseart\Api\Validator {
         static function validateRequiredParameter($parameter, $parameterName)
         {
             if (!$parameter || empty($parameter)) {
-                throw RiseartException::missedRequiredParameter($parameter, $parameterName);
+                throw RiseartException::missedRequiredParameter($parameterName);
             }
             return $parameter;
         }
@@ -86,11 +89,13 @@ namespace Riseart\Api\Validator {
          * @return bool
          * @throws RiseartException
          */
-        public static function validateParameters($parameters)
+        public static function validateRequestParameters($parameters)
         {
+            // Parameters can be null or an array
             if (!is_array($parameters)) {
                 throw RiseartException::invalidParameters($parameters);
             }
+            return $parameters;
         }
 
         /**
