@@ -55,3 +55,4 @@ Thumbs.db
 vendor/
 composer.lock
 .credentials
+cli.php
