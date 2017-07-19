@@ -1,5 +1,5 @@
-<?php
-$loader = require '../vendor/autoload.php';
+<?php;
+$loader = require dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 use Riseart\Api\Client as RiseartClient;
 use Riseart\Api\Auth\Adapter\Application as AuthModuleApplication;

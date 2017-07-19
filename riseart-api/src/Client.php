@@ -165,7 +165,6 @@ namespace Riseart\Api {
         /**
          * @param $endpoint
          * @param $resourceId
-         * @param $parameters
          * @param $version
          * @return string
          */
