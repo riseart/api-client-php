@@ -7,7 +7,6 @@
 
 namespace Riseart\Api {
 
-    use PHPUnit\Runner\Exception;
     use Riseart\Api\Auth\Adapter\InterfaceAdapter;
     use Riseart\Api\Exception\RiseartException;
     use Riseart\Api\Token\RiseartToken;
