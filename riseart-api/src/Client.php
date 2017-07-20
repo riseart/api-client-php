@@ -7,6 +7,7 @@
 
 namespace Riseart\Api {
 
+    use PHPUnit\Runner\Exception;
     use Riseart\Api\Auth\Adapter\InterfaceAdapter;
     use Riseart\Api\Exception\RiseartException;
     use Riseart\Api\Token\RiseartToken;
@@ -125,22 +126,32 @@ namespace Riseart\Api {
 
         /**
          * @param $endpoint
-         * @param array $parameters
+         * @param $parameters
          * @param null $version
          * @return RiseartResponse
+         * @throws RiseartException
          */
         public function POST($endpoint, $parameters, $version = null)
         {
-            $parameters = Validator::validateRequestParameters($parameters);
-            $url = $this->buildUrl($endpoint, null, $version);
-            return new RiseartResponse($this->client->request(
-                self::HTTP_METHOD_POST,
-                $url,
-                [
-                    'headers' => $this->getHeaders(),
-                    'json' => $parameters,
-                ]
-            ));
+            try{
+                $parameters = Validator::validateRequestParameters($parameters);
+                $url = $this->buildUrl($endpoint, null, $version);
+                return new RiseartResponse($this->client->request(
+                    self::HTTP_METHOD_POST,
+                    $url,
+                    [
+                        'headers' => $this->getHeaders(),
+                        'json' => $parameters,
+                    ]
+                ));
+            } catch (GuzzleException $e) {
+                throw RiseartException::manageGuzzleException($e);
+            } catch (RiseartException $e) {
+                throw $e;
+            } catch (\Exception $e) {
+                throw RiseartException::manageGenericException($e);
+            }
+
         }
 
         /**
