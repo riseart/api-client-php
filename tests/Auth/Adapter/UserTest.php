@@ -45,7 +45,7 @@ class UserTest extends TestCase
     public function testConstructorWithoutPassword(){
         new AuthModuleUser([
             'apiKey' => getenv('RISEART_APPLICATION_AUTH_API_KEY'),
-            'username' => getenv('RISEART_APPLICATION_AUTH_API_KEY')
+            'username' => getenv('RISEART_TESTS_DEFAULT_USERNAME')
         ]);
     }
 
@@ -73,7 +73,7 @@ class UserTest extends TestCase
                 [
                     "verifySSL" => false,
                     "authGateway" => AbstractAdapter::AUTH_GATEWAY,
-                    "apiKey" => getenv('RISEART_TESTS_VISITOR_AUTH_API_KEY'),
+                    "apiKey" => getenv('RISEART_TESTS_USER_AUTH_API_KEY'),
                     "username" => getenv('RISEART_TESTS_DEFAULT_USERNAME'),
                     "password" => getenv('RISEART_TESTS_DEFAULT_PASSWORD'),
                 ]
