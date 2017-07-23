@@ -10,6 +10,7 @@ namespace Riseart\Api\Auth\Adapter {
 
     /**
      * Class Visitor
+     * @property string apiKey
      * @package Riseart\Api\Auth\Adapter
      */
     class Application

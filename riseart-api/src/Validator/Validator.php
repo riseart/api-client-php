@@ -7,6 +7,8 @@
 
 namespace Riseart\Api\Validator {
 
+    use Riseart\Api\Auth\Adapter\AbstractAdapter;
+    use Riseart\Api\Client;
     use Riseart\Api\Exception\RiseartException;
 
     /**
@@ -105,7 +107,10 @@ namespace Riseart\Api\Validator {
          */
         public static function validateApiHost($host)
         {
-            // TODO: Validate host URI
+            // TODO: Validate host URI and remove Client
+            if($host !== Client::API_HOST){
+                throw RiseartException::invalidApiHost($host);
+            }
             return $host;
         }
     }

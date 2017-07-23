@@ -44,6 +44,8 @@ namespace Riseart\Api\Exception {
         const EXCEPTION_CODE_JWT_TOKEN_INVALID_PAYLOAD = 12;
         /** //TODO: Description */
         const EXCEPTION_CODE_AUTH_MODULE_USER_CONSUMED = 13;
+        /** //TODO: Description */
+        const EXCEPTION_CODE_INVALID_HOST = 14;
 
 
         /**
@@ -268,6 +270,18 @@ namespace Riseart\Api\Exception {
             return new self(
                 self::ERROR_TAG . "The config file passed to the client is not valid - The provided config (json formatted) is: " . json_encode($config),
                 self::EXCEPTION_CODE_INVALID_CLIENT_CONFIG
+            );
+        }
+
+        /**
+         * @param $host
+         * @return RiseartException
+         */
+        public static function invalidApiHost($host)
+        {
+            return new self(
+                self::ERROR_TAG . "The host provided is not a valid API address -".$host,
+                self::EXCEPTION_CODE_INVALID_HOST
             );
         }
     }

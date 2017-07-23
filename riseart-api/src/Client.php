@@ -80,14 +80,14 @@ namespace Riseart\Api {
                 $this->defaultVersion = Validator::validateVersion($config['defaultVersion']) :
                 $this->defaultVersion = self::STABLE_API_VERSION;
 
-            // Checks if there is an auth adapter then stores it
-            (isset($config['authAdapter']) && $config['authAdapter'] instanceof InterfaceAdapter) ?
-                $this->setAuthAdapter($config['authAdapter']) :
-                null;
-
             // Checks if there is a valid token then validates and stores it
             (isset($config['token']) && $config['token'] instanceof RiseartToken) ?
                 $this->setToken($config['token']) :
+                null;
+
+            // Checks if there is an auth adapter then stores it
+            (isset($config['authAdapter']) && $config['authAdapter'] instanceof InterfaceAdapter) ?
+                $this->setAuthAdapter($config['authAdapter']) :
                 null;
         }
 
@@ -132,7 +132,7 @@ namespace Riseart\Api {
          */
         public function POST($endpoint, $parameters, $version = null)
         {
-            try{
+            try {
                 $parameters = Validator::validateRequestParameters($parameters);
                 $url = $this->buildUrl($endpoint, null, $version);
                 return new RiseartResponse($this->client->request(
