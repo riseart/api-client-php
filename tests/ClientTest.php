@@ -1,17 +1,12 @@
 <?php
 
 namespace TDD\test;
-require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-(is_file('local_env.php')) ? require 'local_env.php' : null;
 
 use PHPUnit\Framework\TestCase;
 use Riseart\Api\Auth\Adapter\Application as AuthModuleApplication;
 use Riseart\Api\Auth\Adapter\InterfaceAdapter;
 use Riseart\Api\Token\RiseartToken;
 use Riseart\Api\Client as RiseartClient;
-
-var_dump("CIAO");
-var_dump(getenv("RISEART_API_KEY"));
 
 class ClientTest extends TestCase
 {
