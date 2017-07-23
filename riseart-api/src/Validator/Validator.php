@@ -7,7 +7,6 @@
 
 namespace Riseart\Api\Validator {
 
-    use Riseart\Api\Auth\Adapter\AbstractAdapter;
     use Riseart\Api\Client;
     use Riseart\Api\Exception\RiseartException;
 
