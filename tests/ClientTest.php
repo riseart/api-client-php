@@ -1,8 +1,8 @@
 <?php
 
-
 namespace TDD\test;
 require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+(is_file('local_env.php')) ? require 'local_env.php' : null;
 
 use PHPUnit\Framework\TestCase;
 use Riseart\Api\Auth\Adapter\Application as AuthModuleApplication;
@@ -10,6 +10,8 @@ use Riseart\Api\Auth\Adapter\InterfaceAdapter;
 use Riseart\Api\Token\RiseartToken;
 use Riseart\Api\Client as RiseartClient;
 
+var_dump("CIAO");
+var_dump(getenv("RISEART_API_KEY"));
 
 class ClientTest extends TestCase
 {
@@ -81,6 +83,28 @@ class ClientTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function invalidVersionDataProvider()
+    {
+        return [
+            [''],
+            ['1']
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function validVersionDataProvider()
+    {
+        return [
+            ['v1'],
+            ['v2']
+        ];
+    }
+
+    /**
      * No config
      */
     public function testConstructorWithoutParameters()
@@ -122,22 +146,14 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(RiseartClient::class, new RiseartClient($dummyConfig));
     }
 
-    /**
-     * @return array
-     */
-    public function invalidVersionDataProvider(){
-        return [
-            [''],
-            ['1']
-        ];
-    }
 
     /**
      * Valid Version
+     * @dataProvider validVersionDataProvider
      */
-    public function testConstructorValidVersion()
+    public function testConstructorValidVersion($version)
     {
-        $dummyConfig = ['defaultVersion' => 'v2'];
+        $dummyConfig = ['defaultVersion' => $version];
         $this->assertInstanceOf(RiseartClient::class, new RiseartClient($dummyConfig));
     }
 
