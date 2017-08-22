@@ -92,10 +92,10 @@ namespace Riseart\Api {
         }
 
         /**
-         * @param $endpoint
-         * @param null $resourceId
+         * @param string $endpoint
+         * @param mixed $resourceId
          * @param array $parameters
-         * @param null $version
+         * @param string $version
          * @return RiseartResponse
          * @throws RiseartException
          */
@@ -135,6 +135,7 @@ namespace Riseart\Api {
             try {
                 $parameters = Validator::validateRequestParameters($parameters);
                 $url = $this->buildUrl($endpoint, null, $version);
+
                 return new RiseartResponse($this->client->request(
                     self::HTTP_METHOD_POST,
                     $url,
@@ -155,13 +156,15 @@ namespace Riseart\Api {
 
         /**
          * @param InterfaceAdapter $authAdapter
-         * @return mixed|null|string
+         * @return Client
          */
         public function setAuthAdapter(InterfaceAdapter $authAdapter)
         {
             $this->authAdapter = $authAdapter;
             $this->client = $authAdapter->getHttpClient();
             $this->resetToken();
+
+            return $this;
         }
 
         /**
@@ -198,11 +201,17 @@ namespace Riseart\Api {
          */
         private function getHeaders()
         {
-            if ($this->getToken()->isExpired()) {
+            // Validate token
+        	if ($this->getToken()->isExpired()) {
                 throw RiseartException::JWTTokenWasExpired();
             }
+
+            // Default headers
             $headers = $this->defaultHeaders;
+
+            // Authorization
             ($this->getToken()) ? $headers['Authorization'] = 'Bearer ' . $this->getToken() : null;
+
             return $headers;
         }
 
@@ -223,20 +232,26 @@ namespace Riseart\Api {
 
         /**
          * @param $token
-         * @return string
+         * @return Client
          */
         public function setToken(RiseartToken $token)
         {
             $this->token = $token;
-            return $this->token;
+
+            return $this;
         }
 
         /**
          * resetToken
+		 * @return Client
          */
         public function resetToken()
         {
             $this->token = null;
+
+            return $this;
         }
+
     }
+
 }
