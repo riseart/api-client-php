@@ -94,9 +94,9 @@ namespace Riseart\Api\Auth\Adapter {
 
 
         /**
-         * @return string
+         * @return array
          */
-        public function getApiKey(): string
+        public function getApiKey()
         {
             return $this->apiKey;
         }

@@ -67,7 +67,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return int
          */
-        public function getUserId(): int
+        public function getUserId()
         {
             return $this->userId;
         }
@@ -83,7 +83,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return string
          */
-        public function getAclRole(): string
+        public function getAclRole()
         {
             return $this->aclRole;
         }
