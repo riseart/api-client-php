@@ -55,5 +55,5 @@ Thumbs.db
 coverage
 vendor/
 composer.lock
-local_env.php
+test_env.php
 cli.php
