@@ -28,7 +28,7 @@ namespace Riseart\Api\Auth\Adapter {
          */
         public function __construct(array $config)
         {
-            $this->apiKey = Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY');
+            $this->setApiKey(Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY'));
             $this->visitorId = Validator::validateRequiredParameter((isset($config['visitorId'])) ? $config['visitorId'] : null, 'VISITOR ID');
             $verifySSL = (isset($config['verifySSL'])) ? $config['verifySSL'] : true;
             $authGateway = (isset($config['authGateway'])) ? $config['authGateway'] : self::AUTH_GATEWAY;
@@ -39,7 +39,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return array
          */
-        public function getPayload()
+        public function getPayload(): array
         {
             return [
                 'api_key' => $this->apiKey,
