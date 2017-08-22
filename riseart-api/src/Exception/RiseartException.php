@@ -15,7 +15,6 @@ namespace Riseart\Api\Exception {
      */
     class RiseartException extends \Exception
     {
-
         CONST ERROR_TAG = '[RISEART-API-EXCEPTION] ';
 
         /** //TODO: Description */
@@ -46,7 +45,6 @@ namespace Riseart\Api\Exception {
         const EXCEPTION_CODE_AUTH_MODULE_USER_CONSUMED = 13;
         /** //TODO: Description */
         const EXCEPTION_CODE_INVALID_HOST = 14;
-
 
         /**
          * @var int
@@ -284,5 +282,7 @@ namespace Riseart\Api\Exception {
                 self::EXCEPTION_CODE_INVALID_HOST
             );
         }
+
     }
+
 }

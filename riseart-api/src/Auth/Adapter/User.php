@@ -33,7 +33,7 @@ namespace Riseart\Api\Auth\Adapter {
          */
         public function __construct(array $config)
         {
-            $this->apiKey = Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY');
+            $this->setApiKey(Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY'));
             $this->username = Validator::validateRequiredParameter((isset($config['username'])) ? $config['username'] : null, 'USERNAME');
             $this->password = Validator::validateRequiredParameter((isset($config['password'])) ? $config['password'] : null, 'PASSWORD');
             $verifySSL = (isset($config['verifySSL'])) ? $config['verifySSL'] : true;
@@ -45,7 +45,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return array
          */
-        public function getPayload()
+        public function getPayload(): array
         {
 
             $payLoad = [
@@ -55,20 +55,23 @@ namespace Riseart\Api\Auth\Adapter {
                 'password' => $this->password
             ];
             $this->password = '';
+
             return $payLoad;
         }
 
         /**
          * @param $username
          */
-        public function setUsername($username){
+        public function setUsername($username)
+        {
             $this->username = $username;
         }
 
         /**
          * @param $password
          */
-        public function setPassword($password){
+        public function setPassword($password)
+        {
             $this->password = $password;
         }
     }

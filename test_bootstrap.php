@@ -1,6 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
-(is_file('local_env.php')) ? require 'local_env.php' : null;
+(is_file('test_env.php')) ? require 'test_env.php' : null;
 
 if(!getenv("RISEART_TESTS_APPLICATION_AUTH_API_KEY")){
     throw new RuntimeException("RISEART_TESTS_APPLICATION_AUTH_API_KEY env is required");

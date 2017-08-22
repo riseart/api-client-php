@@ -5,6 +5,7 @@ namespace TDD\test;
 use PHPUnit\Framework\TestCase;
 use Riseart\Api\Auth\Adapter\Application as AuthModuleApplication;
 use Riseart\Api\Auth\Adapter\InterfaceAdapter;
+use Riseart\Api\Client;
 use Riseart\Api\Token\RiseartToken;
 use Riseart\Api\Client as RiseartClient;
 
@@ -112,9 +113,20 @@ class ClientTest extends TestCase
      * @expectedException Riseart\Api\Exception\RiseartException
      * @expectedExceptionCode Riseart\Api\Exception\RiseartException::EXCEPTION_CODE_INVALID_HOST
      */
-    public function testConstructorInvalidHost()
+    public function testConstructorInvalidHostScheme()
     {
-        $dummyConfig = ['host' => 'api.com'];
+        $dummyConfig = ['host' => 'http://api.com'];
+        new RiseartClient($dummyConfig);
+    }
+
+    /**
+     * Invalid Host
+     * @expectedException Riseart\Api\Exception\RiseartException
+     * @expectedExceptionCode Riseart\Api\Exception\RiseartException::EXCEPTION_CODE_INVALID_HOST
+     */
+    public function testConstructorInvalidHostDomain()
+    {
+        $dummyConfig = ['host' => 'https://api.com'];
         new RiseartClient($dummyConfig);
     }
 
@@ -123,7 +135,6 @@ class ClientTest extends TestCase
      */
     public function testConstructorValidHost()
     {
-        //TODO: Implement a valid host validator
         $dummyConfig = ['host' => RiseartClient::API_HOST];
         $this->assertInstanceOf(RiseartClient::class, new RiseartClient($dummyConfig));
     }

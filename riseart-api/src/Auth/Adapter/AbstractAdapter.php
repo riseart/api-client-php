@@ -19,7 +19,7 @@ namespace Riseart\Api\Auth\Adapter {
     abstract class AbstractAdapter
         implements InterfaceAdapter
     {
-        const AUTH_GATEWAY = 'https://6ab2igwy3f.execute-api.eu-west-1.amazonaws.com/dev';
+        const AUTH_GATEWAY = 'https://api.riseart.com/auth';
 
         /**
          * @var string
@@ -51,7 +51,7 @@ namespace Riseart\Api\Auth\Adapter {
          * @var array
          */
         protected $defaultHeaders = [
-            'User-Agent' => 'Rise Art API - PHP client',
+            'User-Agent' => 'Rise Art API PHP client',
             'Accept' => 'application/json',
             'Content-type' => 'application/json',
         ];
@@ -73,6 +73,7 @@ namespace Riseart\Api\Auth\Adapter {
                 if ($content && isset($content->token)) {
                     return new RiseartToken($content->token);
                 }
+
                 throw RiseartException::manageFailedAuth($content, get_class($this));
 
             } catch (ClientException $e) {
@@ -83,9 +84,19 @@ namespace Riseart\Api\Auth\Adapter {
         }
 
         /**
+         * @param $apiKey
          * @return string
          */
-        public function getApiKey()
+        protected function setApiKey(string $apiKey)
+        {
+            $this->apiKey = $apiKey;
+        }
+
+
+        /**
+         * @return string
+         */
+        public function getApiKey(): string
         {
             return $this->apiKey;
         }

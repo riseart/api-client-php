@@ -23,12 +23,12 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return array
          */
-        public function getPayload();
+        public function getPayload(): array;
 
         /**
          * @return string
          */
-        public function getApiKey();
+        public function getApiKey(): string;
 
         /**
          * @return string
