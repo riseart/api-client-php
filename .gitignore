@@ -56,5 +56,4 @@ coverage
 vendor/
 composer.lock
 local_env.php
-.credentials
 cli.php
