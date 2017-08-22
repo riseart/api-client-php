@@ -87,14 +87,13 @@ namespace Riseart\Api\Auth\Adapter {
          * @param $apiKey
          * @return string
          */
-        protected function setApiKey(string $apiKey)
+        protected function setApiKey($apiKey)
         {
             $this->apiKey = $apiKey;
         }
 
-
         /**
-         * @return array
+         * @return string
          */
         public function getApiKey()
         {

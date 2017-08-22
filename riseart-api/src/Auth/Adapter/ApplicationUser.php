@@ -51,7 +51,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return array
          */
-        public function getPayload(): array
+        public function getPayload()
         {
             $payload = [
                 'api_key' => $this->apiKey,
@@ -75,7 +75,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @param int $userId
          */
-        protected function setUserId(int $userId)
+        protected function setUserId($userId)
         {
             $this->userId = $userId;
         }
@@ -92,7 +92,7 @@ namespace Riseart\Api\Auth\Adapter {
          * @param string $aclRole
          * @return string
          */
-        protected function setAclRole(string $aclRole)
+        protected function setAclRole($aclRole)
         {
             $this->aclRole = $aclRole;
         }
