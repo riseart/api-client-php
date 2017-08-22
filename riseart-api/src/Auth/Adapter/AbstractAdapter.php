@@ -19,7 +19,7 @@ namespace Riseart\Api\Auth\Adapter {
     abstract class AbstractAdapter
         implements InterfaceAdapter
     {
-        const AUTH_GATEWAY = 'https://6ab2igwy3f.execute-api.eu-west-1.amazonaws.com/dev';
+        const AUTH_GATEWAY = 'https://api.riseart.com/auth';
 
         /**
          * @var string

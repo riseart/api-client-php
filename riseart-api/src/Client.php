@@ -22,7 +22,7 @@ namespace Riseart\Api {
     class Client
     {
         const STABLE_API_VERSION = 'v1';
-        const API_HOST = 'https://api.riseart.local';
+        const API_HOST = 'https://api.riseart.com';
 
         const HTTP_METHOD_GET = 'GET';
         const HTTP_METHOD_POST = 'POST';
