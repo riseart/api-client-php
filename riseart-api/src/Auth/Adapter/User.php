@@ -45,7 +45,7 @@ namespace Riseart\Api\Auth\Adapter {
         /**
          * @return array
          */
-        public function getPayload(): array
+        public function getPayload()
         {
 
             $payLoad = [
