@@ -51,7 +51,7 @@ namespace Riseart\Api\Auth\Adapter {
          * @var array
          */
         protected $defaultHeaders = [
-            'User-Agent' => 'Rise Art API - PHP client',
+            'User-Agent' => 'Rise Art API PHP client',
             'Accept' => 'application/json',
             'Content-type' => 'application/json',
         ];
@@ -73,6 +73,7 @@ namespace Riseart\Api\Auth\Adapter {
                 if ($content && isset($content->token)) {
                     return new RiseartToken($content->token);
                 }
+
                 throw RiseartException::manageFailedAuth($content, get_class($this));
 
             } catch (ClientException $e) {

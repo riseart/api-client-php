@@ -63,7 +63,7 @@ namespace Riseart\Api\Validator {
         public static function validateResourceId($resourceId)
         {
             // Resource ID can be null or a string
-            if($resourceId === null){
+            if ($resourceId === null) {
                 return '';
             }
             if (!is_string($resourceId)) {
@@ -106,10 +106,16 @@ namespace Riseart\Api\Validator {
          */
         public static function validateApiHost($host)
         {
-            // TODO: Validate host URI and remove Client
-            if($host !== Client::API_HOST){
+            $uriParts = parse_url($host);
+
+            if (!isset($uriParts['scheme']) || $uriParts['scheme'] !== 'https') {
                 throw RiseartException::invalidApiHost($host);
             }
+
+            if (!isset($uriParts['host']) || strpos($uriParts['host'],'riseart.') === false) {
+                throw RiseartException::invalidApiHost($host);
+            }
+
             return $host;
         }
     }
