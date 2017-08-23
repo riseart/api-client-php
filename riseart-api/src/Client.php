@@ -179,7 +179,7 @@ namespace Riseart\Api {
          * @return RiseartToken
          * @throws RiseartException
          */
-        protected function authenticate()
+        public function authenticate()
         {
             try {
                 $payload = $this->authAdapter->getPayload();
@@ -304,6 +304,7 @@ namespace Riseart\Api {
         {
             $this->authAdapter = $authAdapter;
             $this->resetToken();
+
             return $this;
         }
 
