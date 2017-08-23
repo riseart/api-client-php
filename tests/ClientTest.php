@@ -74,7 +74,10 @@ class ClientTest extends TestCase
             ->disableArgumentCloning()
             ->disallowMockingUnknownTypes()
             ->getMock();
-        $stub->method('authenticate')->willReturn($this->ValidToken);
+        $stub->method('getPayload')->willReturn([
+            'api_key' => getenv('RISEART_TESTS_APPLICATION_AUTH_API_KEY'),
+            'auth_module' => AuthModuleApplication::AUTH_MODULE_NAME,
+        ]);
         return $stub;
     }
 
@@ -152,17 +155,16 @@ class ClientTest extends TestCase
         $this->assertInstanceOf(RiseartClient::class, new RiseartClient($dummyConfig));
     }
 
-
     /**
      * Valid Version
      * @dataProvider validVersionDataProvider
+     * @param $version
      */
     public function testConstructorValidVersion($version)
     {
         $dummyConfig = ['defaultVersion' => $version];
         $this->assertInstanceOf(RiseartClient::class, new RiseartClient($dummyConfig));
     }
-
 
     /**
      * Valid Auth Adapter
@@ -181,15 +183,6 @@ class ClientTest extends TestCase
     public function testConstructorValidToken()
     {
         $instance = new RiseartClient(['token' => $this->ValidToken]);
-        $this->assertInstanceOf(RiseartToken::class, $instance->getToken());
-    }
-
-    /**
-     * Valid Token
-     */
-    public function testGetTokenFromAuthModule()
-    {
-        $instance = new RiseartClient(['authAdapter' => $this->ValidAppAuthModule]);
         $this->assertInstanceOf(RiseartToken::class, $instance->getToken());
     }
 

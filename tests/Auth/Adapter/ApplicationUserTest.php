@@ -138,10 +138,7 @@ class ApplicationUserTest extends TestCase
      */
     public function getConfigDataProvider($apiKey = false, $userId = false, $aclRole = false)
     {
-        $dataProvider = [
-            "verifySSL" => false,
-            "authGateway" => AbstractAdapter::AUTH_GATEWAY
-        ];
+        $dataProvider = [];
         if ($apiKey) {
             $dataProvider['apiKey'] = getenv('RISEART_TESTS_APPLICATION_USER_AUTH_API_KEY');
         }

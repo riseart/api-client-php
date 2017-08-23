@@ -16,11 +16,6 @@ namespace Riseart\Api\Auth\Adapter {
     interface InterfaceAdapter
     {
         /**
-         * @return RiseartToken
-         */
-        public function authenticate();
-
-        /**
          * @return array
          */
         public function getPayload();
@@ -31,9 +26,10 @@ namespace Riseart\Api\Auth\Adapter {
         public function getApiKey();
 
         /**
+         * @param $apiKey
          * @return string
          */
-        public function getAuthGateway();
+        public function setApiKey($apiKey);
     }
 
 }
