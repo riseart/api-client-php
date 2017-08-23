@@ -71,8 +71,6 @@ class UserTest extends TestCase
         return [
             [
                 [
-                    "verifySSL" => false,
-                    "authGateway" => AbstractAdapter::AUTH_GATEWAY,
                     "apiKey" => getenv('RISEART_TESTS_USER_AUTH_API_KEY'),
                     "username" => getenv('RISEART_TESTS_DEFAULT_USERNAME'),
                     "password" => getenv('RISEART_TESTS_DEFAULT_PASSWORD'),
