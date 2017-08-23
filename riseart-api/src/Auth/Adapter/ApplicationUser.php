@@ -53,9 +53,11 @@ namespace Riseart\Api\Auth\Adapter {
                 'auth_module' => self::AUTH_MODULE_NAME,
                 'user_id' => $this->getUserId()
             ];
+
             if ($this->getAclRole()) {
                 $payload['acl_role'] = $this->getAclRole();
             }
+
             return $payload;
         }
 

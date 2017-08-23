@@ -49,7 +49,10 @@ namespace Riseart\Api\Auth\Adapter {
                 'username' => $this->getUsername(),
                 'password' => $this->getPassword()
             ];
+
+            // Remove password after payload request
             $this->setPassword(null);
+
             return $payLoad;
         }
 
@@ -84,6 +87,7 @@ namespace Riseart\Api\Auth\Adapter {
         {
             $this->password = $password;
         }
+
     }
 
 }

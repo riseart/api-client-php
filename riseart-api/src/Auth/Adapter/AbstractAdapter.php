@@ -14,7 +14,6 @@ namespace Riseart\Api\Auth\Adapter {
     abstract class AbstractAdapter
         implements InterfaceAdapter
     {
-
         /**
          * @var string $apiKey
          */
@@ -49,6 +48,7 @@ namespace Riseart\Api\Auth\Adapter {
         {
             return $this->payload;
         }
+
     }
 
 }
