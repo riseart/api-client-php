@@ -22,12 +22,14 @@ class ApplicationTest extends TestCase
      * @expectedException Riseart\Api\Exception\RiseartException
      * @expectedExceptionCode Riseart\Api\Exception\RiseartException::EXCEPTION_CODE_MISSED_REQUIRED_PARAMETER
      */
-    public function testConstructorWithoutApiKey(){
+    public function testConstructorWithoutApiKey()
+    {
         new AuthModuleApplication([]);
     }
 
     /**
      * @dataProvider getConfigDataProvider
+     * @param $config
      */
     public function testConstructorWithValidConfig($config)
     {
@@ -43,14 +45,8 @@ class ApplicationTest extends TestCase
      */
     public function getConfigDataProvider()
     {
-        return [
-            [
-                [
-                    "verifySSL" => false,
-                    "authGateway" => AbstractAdapter::AUTH_GATEWAY,
-                    "apiKey" => getenv('RISEART_TESTS_APPLICATION_AUTH_API_KEY')
-                ]
-            ]
-        ];
+        return [[[
+            "apiKey" => getenv('RISEART_TESTS_APPLICATION_AUTH_API_KEY')
+        ]]];
     }
 }

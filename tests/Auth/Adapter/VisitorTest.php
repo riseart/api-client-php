@@ -56,9 +56,7 @@ class VisitorTest extends TestCase
         return [
             [
                 [
-                    "verifySSL" => false,
                     "visitorId" => getenv('RISEART_TESTS_DEFAULT_VISITOR_ID'),
-                    "authGateway" => AbstractAdapter::AUTH_GATEWAY,
                     "apiKey" => getenv('RISEART_TESTS_VISITOR_AUTH_API_KEY')
                 ]
             ]

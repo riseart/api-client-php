@@ -341,8 +341,9 @@ namespace Riseart\Api {
          */
         private function getHeaders()
         {
-            // Validate token
-            if ($this->getToken()->isExpired()) {
+            // Get and validate token
+            $token = $this->getToken();
+            if ($token && $token->isExpired()) {
                 throw RiseartException::JWTTokenWasExpired();
             }
 
@@ -350,7 +351,7 @@ namespace Riseart\Api {
             $headers = $this->defaultHeaders;
 
             // Authorization
-            ($this->getToken()) ? $headers['Authorization'] = 'Bearer ' . $this->getToken() : null;
+            ($token) ? $headers['Authorization'] = 'Bearer ' . $token : null;
 
             return $headers;
         }
