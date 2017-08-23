@@ -1,7 +1,6 @@
 {
     "name": "riseart/api-client-php",
     "description": "Rise Art API client for PHP",
-    "version": "0.1.1",
     "type": "library",
     "autoload": {
         "psr-4": {
@@ -15,6 +14,7 @@
         }
     ],
     "require": {
+        "php": "^5.5 || ^7.0",
         "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
