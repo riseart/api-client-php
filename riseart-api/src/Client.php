@@ -24,7 +24,7 @@ namespace Riseart\Api {
     {
         const STABLE_API_VERSION = 'v1';
         const API_HOST = 'https://api.riseart.com';
-        const AUTH_GATEWAY = 'https://api.riseart.com/auth';
+        const AUTH_GATEWAY = 'https://api.riseart.com/v1/auth';
         const SSL_VERIFY_DEFAULT = true;
 
         const HTTP_METHOD_GET = 'GET';
