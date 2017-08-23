@@ -34,12 +34,8 @@ namespace Riseart\Api\Auth\Adapter {
         public function __construct(array $config)
         {
             $this->setApiKey(Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY'));
-            $this->username = Validator::validateRequiredParameter((isset($config['username'])) ? $config['username'] : null, 'USERNAME');
-            $this->password = Validator::validateRequiredParameter((isset($config['password'])) ? $config['password'] : null, 'PASSWORD');
-            $verifySSL = (isset($config['verifySSL'])) ? $config['verifySSL'] : true;
-            $authGateway = (isset($config['authGateway'])) ? $config['authGateway'] : self::AUTH_GATEWAY;
-
-            parent::__construct($authGateway, $verifySSL);
+            $this->setUsername(Validator::validateRequiredParameter((isset($config['username'])) ? $config['username'] : null, 'USERNAME'));
+            $this->setPassword(Validator::validateRequiredParameter((isset($config['password'])) ? $config['password'] : null, 'PASSWORD'));
         }
 
         /**
@@ -47,16 +43,22 @@ namespace Riseart\Api\Auth\Adapter {
          */
         public function getPayload()
         {
-
             $payLoad = [
                 'api_key' => $this->apiKey,
                 'auth_module' => self::AUTH_MODULE_NAME,
-                'username' => $this->username,
-                'password' => $this->password
+                'username' => $this->getUsername(),
+                'password' => $this->getPassword()
             ];
-            $this->password = '';
-
+            $this->setPassword(null);
             return $payLoad;
+        }
+
+        /**
+         * @return string
+         */
+        public function getUsername()
+        {
+            return $this->username;
         }
 
         /**
@@ -65,6 +67,14 @@ namespace Riseart\Api\Auth\Adapter {
         public function setUsername($username)
         {
             $this->username = $username;
+        }
+
+        /**
+         * @return string
+         */
+        public function getPassword()
+        {
+            return $this->password;
         }
 
         /**

@@ -29,11 +29,7 @@ namespace Riseart\Api\Auth\Adapter {
         public function __construct(array $config)
         {
             $this->setApiKey(Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY'));
-            $this->visitorId = Validator::validateRequiredParameter((isset($config['visitorId'])) ? $config['visitorId'] : null, 'VISITOR ID');
-            $verifySSL = (isset($config['verifySSL'])) ? $config['verifySSL'] : true;
-            $authGateway = (isset($config['authGateway'])) ? $config['authGateway'] : self::AUTH_GATEWAY;
-
-            parent::__construct($authGateway, $verifySSL);
+            $this->setVisitorId(Validator::validateRequiredParameter((isset($config['visitorId'])) ? $config['visitorId'] : null, 'VISITOR ID'));
         }
 
         /**
@@ -42,10 +38,26 @@ namespace Riseart\Api\Auth\Adapter {
         public function getPayload()
         {
             return [
-                'api_key' => $this->apiKey,
+                'api_key' => $this->getApiKey(),
                 'auth_module' => self::AUTH_MODULE_NAME,
-                'visitor_id' => $this->visitorId
+                'visitor_id' => $this->getVisitorId()
             ];
+        }
+
+        /**
+         * @return int
+         */
+        public function getVisitorId()
+        {
+            return $this->visitorId;
+        }
+
+        /**
+         * @param int $visitorId
+         */
+        public function setVisitorId($visitorId)
+        {
+            $this->visitorId = (int)$visitorId;
         }
     }
 }
