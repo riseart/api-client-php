@@ -266,6 +266,37 @@ namespace Riseart\Api {
         }
 
         /**
+         * @param $endpoint
+         * @param $resourceId
+         * @param $parameters
+         * @param null $version
+         * @return RiseartResponse
+         * @throws RiseartException
+         */
+        public function PUT($endpoint, $resourceId, $parameters, $version = null)
+        {
+            try {
+                $parameters = Validator::validateRequestParameters($parameters);
+                $url = $this->buildUrl($endpoint, $resourceId, $version);
+
+                return new RiseartResponse($this->getClient()->request(
+                    self::HTTP_METHOD_PUT,
+                    $url,
+                    [
+                        'headers' => $this->getHeaders(),
+                        'json' => $parameters,
+                    ]
+                ));
+            } catch (GuzzleException $e) {
+                throw RiseartException::manageGuzzleException($e);
+            } catch (RiseartException $e) {
+                throw $e;
+            } catch (\Exception $e) {
+                throw RiseartException::manageGenericException($e);
+            }
+        }
+
+        /**
          * @param InterfaceAdapter $authAdapter
          * @return Client
          */
