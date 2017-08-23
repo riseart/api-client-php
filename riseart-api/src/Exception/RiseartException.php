@@ -112,6 +112,7 @@ namespace Riseart\Api\Exception {
             $data = $response->getBody()->getContents();
             $data = json_decode($data);
             $message = self::ERROR_TAG;
+
             if ($data) {
                 if (isset($data->error) && isset($data->error->title) && isset($data->error->type)) {
                     $message .= " {$data->error->title} - {$data->error->type}";
@@ -125,6 +126,7 @@ namespace Riseart\Api\Exception {
                 $exception->setMessage(self::ERROR_TAG . 'An internal server error has happened, the client was not able to recognize the error.');
                 $exception->setRawError($response->getBody()->getContents());
             }
+
             return $exception;
         }
 

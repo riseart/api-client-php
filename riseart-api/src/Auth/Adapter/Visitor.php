@@ -59,5 +59,7 @@ namespace Riseart\Api\Auth\Adapter {
         {
             $this->visitorId = (int)$visitorId;
         }
+
     }
+
 }

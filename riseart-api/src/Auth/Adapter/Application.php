@@ -38,6 +38,7 @@ namespace Riseart\Api\Auth\Adapter {
                 'auth_module' => self::AUTH_MODULE_NAME,
             ];
         }
+
     }
 
 }
