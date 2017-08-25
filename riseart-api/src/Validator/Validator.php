@@ -66,7 +66,7 @@ namespace Riseart\Api\Validator {
             if ($resourceId === null) {
                 return '';
             }
-            if (!is_string($resourceId)) {
+            if (!is_scalar($resourceId)) {
                 throw RiseartException::invalidResourceId();
             }
         }
