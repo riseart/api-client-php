@@ -186,7 +186,7 @@ namespace Riseart\Api\Exception {
         public static function invalidResourceId()
         {
             return new self(
-                self::ERROR_TAG . "The resource id must be a string",
+                self::ERROR_TAG . "The resource id must be a scalar value",
                 self::EXCEPTION_CODE_INVALID_RESOURCE_ID
             );
         }
