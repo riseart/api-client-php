@@ -40,7 +40,7 @@ namespace Riseart\Api\Auth\Adapter {
         {
             $this->setApiKey(Validator::validateRequiredParameter((isset($config['apiKey'])) ? $config['apiKey'] : null, 'API KEY'));
             $this->setUserId(Validator::validateRequiredParameter((isset($config['userId'])) ? $config['userId'] : null, 'USER ID'));
-            $this->setAclRole(isset($config['aclRole'])) ? $config['aclRole'] : null;
+            $this->setAclRole(isset($config['aclRole']) ? $config['aclRole'] : null);
         }
 
         /**
