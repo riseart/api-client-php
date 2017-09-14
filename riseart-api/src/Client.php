@@ -13,7 +13,7 @@ namespace Riseart\Api {
     use Riseart\Api\Token\RiseartToken;
     use Riseart\Api\Validator\Validator;
     use GuzzleHttp\Client as GuzzleClient;
-    use GuzzleHttp\Exception\ClientException as GuzzleException;
+    use GuzzleHttp\Exception\BadResponseException as GuzzleException;
     use Riseart\Api\Response\RiseartResponse;
 
     /**
@@ -71,8 +71,8 @@ namespace Riseart\Api {
          * @var array
          */
         private $defaultHeaders = [
-            'User-Agent' => 'Rise Art PHP client',
-            'Accept' => 'application/json',
+            'User-Agent'   => 'Rise Art PHP client',
+            'Accept'       => 'application/json',
             'Content-type' => 'application/json',
         ];
 
@@ -154,9 +154,11 @@ namespace Riseart\Api {
             if ($this->client) {
                 return $this->client;
             }
+
             $this->client = new GuzzleClient([
                 'verify' => $this->verifySSL
             ]);
+
             return $this->client;
         }
 
@@ -185,7 +187,7 @@ namespace Riseart\Api {
                 $payload = $this->authAdapter->getPayload();
                 $parameters = [
                     'headers' => $this->defaultHeaders,
-                    'json' => $payload
+                    'json'    => $payload
                 ];
                 $response = $this->getClient()->post($this->getAuthGateway(), $parameters);
 
@@ -221,7 +223,7 @@ namespace Riseart\Api {
                     $url,
                     [
                         'headers' => $this->getHeaders(),
-                        'query' => $parameters,
+                        'query'   => $parameters,
                     ]
                 );
 
@@ -253,7 +255,7 @@ namespace Riseart\Api {
                     $url,
                     [
                         'headers' => $this->getHeaders(),
-                        'json' => $parameters,
+                        'json'    => $parameters,
                     ]
                 ));
             } catch (GuzzleException $e) {
@@ -284,7 +286,7 @@ namespace Riseart\Api {
                     $url,
                     [
                         'headers' => $this->getHeaders(),
-                        'json' => $parameters,
+                        'json'    => $parameters,
                     ]
                 ));
             } catch (GuzzleException $e) {
