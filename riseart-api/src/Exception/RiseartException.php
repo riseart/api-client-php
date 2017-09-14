@@ -7,7 +7,7 @@
 
 namespace Riseart\Api\Exception {
 
-    use GuzzleHttp\Exception\ClientException;
+    use GuzzleHttp\Exception\BadResponseException;
 
     /**
      * Class RiseartException
@@ -100,30 +100,48 @@ namespace Riseart\Api\Exception {
         }
 
         /**
-         * @param ClientException $clientException
+         * @param BadResponseException $clientException
          * @return RiseartException
          */
-        public static function manageGuzzleException(ClientException $clientException)
+        public static function manageGuzzleException(BadResponseException $clientException)
         {
-            $response = $clientException->getResponse();
-            $exception = new self("", self::EXCEPTION_CODE_GUZZLE_EXCEPTION);
+            // API response object
+        	$response  = $clientException->getResponse();
 
+        	// Build exception
+            $exception = new self("", self::EXCEPTION_CODE_GUZZLE_EXCEPTION, $clientException);
             $exception->setHttpStatusCode($response->getStatusCode());
+
+            // Exception response body
             $data = $response->getBody()->getContents();
             $data = json_decode($data);
-            $message = self::ERROR_TAG;
 
             if ($data) {
-                if (isset($data->error) && isset($data->error->title) && isset($data->error->type)) {
-                    $message .= " {$data->error->title} - {$data->error->type}";
-                } else {
-                    $message .= "Unrecognized error type from API - no error title and type found";
-                }
-                $exception->setMessage($message);
+				// Parse API error response body
+				$message = [];
+                if (isset($data->error)) {
+					if(isset($data->error->type)) {
+						$message[] = $data->error->type;
+					}
+					if(isset($data->error->title)) {
+						$message[] = $data->error->title;
+					}
+					if(isset($data->error->detail)) {
+						$message[] = $data->error->detail;
+					}
+				}
+
+                if(count($message) == 0) {
+					$message = "Unrecognized error type from API, no error information received";
+				} else {
+                	$message = implode(": ", $message);
+				}
+
+                $exception->setMessage(self::ERROR_TAG . $message);
                 $exception->setRawError($data);
             } else {
                 // API response is not a valid JSON
-                $exception->setMessage(self::ERROR_TAG . 'An internal server error has happened, the client was not able to recognize the error.');
+                $exception->setMessage(self::ERROR_TAG . 'Unrecognized error from API, no response body received');
                 $exception->setRawError($response->getBody()->getContents());
             }
 
