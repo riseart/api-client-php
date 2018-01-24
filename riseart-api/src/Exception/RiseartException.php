@@ -157,7 +157,7 @@ namespace Riseart\Api\Exception {
         {
             $exception = new self(
                 self::ERROR_TAG . "The authentication with the $module was failed",
-                self::ERROR_CODE_AUTHENTICATION_FAILED
+                self::EXCEPTION_CODE_AUTHENTICATION_FAILED
             );
             $exception->rawError = $contentResponse;
             return $exception;
